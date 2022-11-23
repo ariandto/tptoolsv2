@@ -16,6 +16,7 @@ using System.Net.Sockets;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace TapControlDemo
 {
@@ -27,26 +28,65 @@ namespace TapControlDemo
             richTextBox1.Focus();
             radioButton1.Checked = true;
         }
-
-
+        void hapusspasi()
+        {
+            string spasi = " or 000 or ";
+            string spasi2 = " or 00 or ";
+            if (richTextBox2.Text.Contains(spasi))
+            {
+                richTextBox2.Text = richTextBox2.Text.Replace(spasi, "");
+            }
+            else if (richTextBox2.Text.Contains(spasi2))
+            {
+                richTextBox2.Text = richTextBox2.Text.Replace(spasi2, "");
+            }
+        }
+        void hapuskoma()
+        {
+            string komadobel = ";;";
+            if (richTextBox2.Text.Contains(komadobel))
+            {
+                richTextBox2.Text = richTextBox2.Text.Replace(komadobel, ";");
+            }
+        }
+        
         void pilihkls()
         {
             string Nol = "000";
             string koma = ";";
             string hasil = "";
+            string formatOr = " or ";
+            
+
             string message = "Richtextbox masih kosong || String Length == 0";
             string title = "Information || Error!";
             var lines = richTextBox1.Text.Split('\n', '\r').ToList();
+            
+            if (radioButton3.Checked == true)
+                foreach (var line in lines.Distinct())
+                {
+                    hasil = Nol + line + formatOr;
+                    richTextBox2.AppendText(hasil);
+                    hapusspasi();
+                }
+
 
             if (radioButton2.Checked == true)
                 foreach (var line in lines.Distinct())
                 {
-
+                    
                     hasil = line + koma;
                     hasil = System.Text.RegularExpressions.Regex.Replace(hasil, " ", "");
                     richTextBox2.AppendText(hasil);
+                    //richTextBox2.AppendText("\r\n");
+                    hapuskoma();
+                  
+                  
+
                 }
 
+           
+           
             if (richTextBox1.Text.Length == 0)
             {
                 MessageBox.Show(message, title);
@@ -74,15 +114,28 @@ namespace TapControlDemo
                 string message = "Richtextbox masih kosong || String Length == 0";
                 string title = "Information || Error!";
                 var lines = richTextBox1.Text.Split('\n', '\r').ToList();
+                string formatOr = " or ";
 
-                if (radioButton2.Checked == true)
+            if (radioButton3.Checked == true)
+                foreach (var line in lines.Distinct())
+                {
+                    hasil = Nol + line + formatOr;
+                    richTextBox2.AppendText(hasil);
+                    hapusspasi();
+                }
+
+            if (radioButton2.Checked == true)
                     foreach (var line in lines.Distinct())
                     {
 
-                        hasil = line + koma;
-                        hasil = System.Text.RegularExpressions.Regex.Replace(hasil, " ", "");
-                        richTextBox2.AppendText(hasil);
-                    }
+                    
+                    hasil = line + koma;
+                    hasil = System.Text.RegularExpressions.Regex.Replace(hasil, " ", "");
+                    richTextBox2.AppendText(hasil);
+                    //richTextBox2.AppendText("\r\n");
+                    hapuskoma();
+
+                }
 
                 if (richTextBox1.Text.Length == 0)
                 {
@@ -129,19 +182,19 @@ namespace TapControlDemo
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             // Get the hostname
 
-            string myHost = System.Net.Dns.GetHostName();
+            //string myHost = System.Net.Dns.GetHostName();
 
             // Show the hostname
 
-            label2.Text = myHost;
+            //label2.Text = myHost;
 
             // Get the IP from the host name
 
-            string myIP = System.Net.Dns.GetHostByName(myHost).AddressList[0].ToString();
+            //string myIP = System.Net.Dns.GetHostByName(myHost).AddressList[0].ToString();
 
             // Show the IP
 
-            label4.Text = myIP;
+            //label4.Text = myIP;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -191,6 +244,11 @@ namespace TapControlDemo
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
